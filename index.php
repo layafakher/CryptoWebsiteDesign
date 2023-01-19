@@ -313,23 +313,7 @@
       </div>
       <div class="footer__bottom">
         <div class="footer__bottom__copyright text text--small text--regular">&copy;2023 DALIYA CRYPTO. All rights reserved.</div>
-        <div class="footer__bottom__social-media">
-          <svg class="social-icon">
-            <use xlink:href="images/social-media-sprite.svg#facebook"></use>
-          </svg>
-          <svg class="social-icon">
-            <use xlink:href="images/social-media-sprite.svg#instagram"></use>
-          </svg>
-          <svg class="social-icon">
-            <use xlink:href="images/social-media-sprite.svg#youtube"></use>
-          </svg>
-          <svg class="social-icon">
-            <use xlink:href="images/social-media-sprite.svg#twitter"></use>
-          </svg>
-          <svg class="social-icon">
-            <use xlink:href="images/social-media-sprite.svg#linkedin"></use>
-          </svg>
-        </div>
+
       </div>
     </footer>
     <script>
