@@ -1,8 +1,8 @@
 const container = document.getElementById("data_container");
-const ids = ["bitcoin", "ethereum", "tether", "binancecoin", "solana", "ripple", "cardano", "avalanche-2"]
+const ids = ["bitcoin", "ethereum", "tether", "binancecoin", "solana", "ripple", "cardano", "avalanche-2", "dogecoin", "polkadot", "uniswap", "monero", "stellar", "shiba-inu"]
 
 function updateData(coins) {
-    console.log(coins);
+    container.innerHTML = "";
     let i = 1;
     coins.forEach(coin => {
         appendRow(coin, i);
@@ -59,18 +59,23 @@ function fetchData() {
         }).then(function (coins) {
             var ajaxUrl = 'data_insert.php',
                 data = { coins: coins };
-                console.log(coins);
-            $.post(ajaxUrl, data, function (response) { });
+            $.post(ajaxUrl, data, function (response) {
+                ajaxUrl = 'get_data.php',
+                    data = {};
+                $.post(ajaxUrl, data, function (response) {
+                    var data = JSON.parse(response);
+                    updateData(data);
+                });
+            });
         }).catch(function (err) {
             console.log('Fetch Error :-S', err);
+            ajaxUrl = 'get_data.php',
+                data = {};
+            $.post(ajaxUrl, data, function (response) {
+                var data = JSON.parse(response);
+                updateData(data);
+            });
         });
-
-    ajaxUrl = 'get_data.php',
-    data = {};
-    $.post(ajaxUrl, data, function (response) {
-        var data = JSON.parse(response);
-        updateData(data);
-     });
 }
 
 window.onload = () => fetchData();
