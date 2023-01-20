@@ -53,6 +53,14 @@ body{
     </style>
 </head>
 <body>
+
+    <?php session_start();
+        if(!isset($_SESSION['user'])){
+            header('Location: index.php');
+            exit();
+        }
+    ?>
+
 <div class="container p-0">
     <h1 class="h3 mb-3" style="color:white;">Settings</h1>
     <div class="row">
