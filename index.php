@@ -45,8 +45,13 @@
             <a href="#footer">
             <li class="list__item text text--small text--regular" > 
             Contact
-            </li></a>
-            <button class="btn btn--link text text--small text--medium">Admin</button>
+            </li>
+          
+          </a>
+            <a href="admin.php">
+            <li class="list__item text text--small text--regular">Admin</li>
+            </a>
+
           </ul>
           <form >
           <button class="btn btn--link text text--small text--medium" type="submit" formaction="login.php">Login</button>
