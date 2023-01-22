@@ -51,7 +51,7 @@
         <img src="./assets/images/logo.svg" width="32" height="32" alt="Cryptex logo">
         Cryptex
       </a> -->
-      <div class="logo">
+      <div class="logo" style="cursor: pointer;" onclick="location.href = 'index.php'">
         <img src="images/logo.svg" alt="Croppo brand logo" />
         <span class="text text--medium">DALIYA CRYPTO</span>
       </div>
@@ -206,16 +206,16 @@
                           </a>
                         </div>
     
-                        <data class="card-value" value="46168.95">USD '.number_format($price * (float)$item["amount"]).'</data>
+                        <data class="card-value">USD '.number_format($price * (float)$item["amount"],2).'</data>
     
                         <div class="card-analytics " style="margin-bottom:5px;">
-                          <data class="current-price" value="'.number_format($price).'">'.number_format($price).'</data>
+                          <data class="current-price" value="'.number_format($price,3).'">'.number_format($price,3).'</data>
     
     
                           </div>
                           <data class="current-price " value="'.$item["amount"].'" style="margin-bottom:1rem;">Amount = '.$item["amount"].'</data>
     
-                          <button class="tab-btn active promptBtn" onclick="pr('."'sell'".',\''.$item["name"].'\')">Sell</button>
+                          <button class="tab-btn active promptBtn" onclick="pr(\''.$item["name"].'\')">Sell</button>
     
                       </div>
                     </li>

@@ -48,7 +48,7 @@
         <img src="./assets/images/logo.svg" width="32" height="32" alt="Cryptex logo">
         Cryptex
       </a> -->
-      <div class="logo">
+      <div class="logo" style="cursor: pointer;" onclick="location.href = 'index.php'">
         <img src="images/logo.svg" alt="Croppo brand logo" />
         <span class="text text--medium">DALIYA CRYPTO</span>
       </div>
@@ -208,7 +208,7 @@
 
                   <td class="table-data">
                     <div class="wrapper">
-                      <img src="./assets/images/coin-4.svg" width="20" height="20" alt="BNB logo" class="img">
+                      <!-- <img src="./assets/images/coin-4.svg" width="20" height="20" alt="BNB logo" class="img"> -->
 
                       <h3>
                         <a href="#" class="coin-name">BNB <span class="span">BNB/USD</span></a>
@@ -245,7 +245,7 @@
 
                   <td class="table-data">
                     <div class="wrapper">
-                      <img src="./assets/images/coin-5.svg" width="20" height="20" alt="Solana logo" class="img">
+                      <!-- <img src="./assets/images/coin-5.svg" width="20" height="20" alt="Solana logo" class="img"> -->
 
                       <h3>
                         <a href="#" class="coin-name">Solana <span class="span">SOL</span></a>

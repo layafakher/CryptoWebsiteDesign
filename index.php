@@ -28,6 +28,9 @@
       crossorigin="anonymous"></script>
   </head>
   <body>
+    <?php 
+      session_start();
+    ?>
     <!-- Header-->
     <header class="header" id="header">
       <!-- Top Header -->
@@ -39,42 +42,58 @@
         <nav display="inline">
           
           <ul class="list list--inline">
-            <!-- <li class="list__item text text--small text--regular">Products</li>
-            <li class="list__item text text--small text--regular">Features</li> -->
-            <!-- <li class="list__item text text--small text--regular">About</li> -->
             <a href="#footer">
             <li class="list__item text text--small text--regular" > 
             Contact
             </li>
           
           </a>
-            <a href="admin.php">
-            <li class="list__item text text--small text--regular">Admin</li>
-            </a>
+
+            <?php
+              if(isset($_SESSION['user'])){
+                $user = unserialize($_SESSION["user"]);
+                if(filter_var($user->isAdmin, FILTER_VALIDATE_BOOLEAN)){
+                  echo 
+                  '
+                    <a href="admin.php">
+                      <li class="list__item text text--small text--regular">Admin</li>
+                    </a>
+                  ';
+                }
+              }
+            ?>
 
           </ul>
-          <form >
-          <button class="btn btn--link text text--small text--medium" type="submit" formaction="login.php">Login</button>
-          </form>
-          
-          <span class="vertical-line"></span>
-          <form>
-          <button type="submit" class="btn btn--accent text--small text--medium" formaction="register.php">Register</button>
-          </form>
-          
-          
+          <?php
+              if(!isset($_SESSION['user'])){
+                echo 
+                '
+                <form >
+                <button class="btn btn--link text text--small text--medium" type="submit" formaction="login.php">Login</button>
+                </form>
+                
+                <span class="vertical-line"></span>
+                <form>
+                <button type="submit" class="btn btn--accent text--small text--medium" formaction="register.php">Register</button>
+                </form>
+                ';
+              }
+              else{
+                echo 
+                '
+                    <a href="home.php">
+                      <li class="list__item text text--small text--regular">Home</li>
+                    </a>
+                ';
+              }
+            ?>
 
         </nav>
 
       </div>
-      <!-- Header Body -->
       <div class="header__body">
         <div class="grid grid--1x2 grid--centered grid-gap--small">
           <div class="value-proposition">
-            <!-- <div class="badge-container">
-              <span class="badge badge--dark text--small">75% Save</span>
-              <span class="text text--small text--regular text--white">For the Black Friday weekend</span>
-            </div> -->
             <h1 class="value-proposition__title">Fastest & secure platform to invest in crypto</h1>
             <p class="value-proposition__text text text--small text--regular">Buy and sell cryptocurrencies, trusted by 10M wallets with over $30 billion in transactions.</p>
             <form action="login.php">
@@ -95,82 +114,7 @@
       <img class="background-item-1" src="images/background-item-1.svg" alt="" />
       <img class="background-item-2" src="images/background-item-2.svg" alt="" />
     </header>
-
-    <!-- Why Crappo -->
-    <!-- <section class="why-crappo"> -->
-      <!-- Media Objects -->
-      <!-- <div class="media-container">
-        <div class="media">
-          <div class="icon-container">
-            <svg class="media-icon">
-              <use xlink:href="images/media-icons-sprite.svg#person"></use>
-            </svg>
-          </div>
-          <div>
-            <h2>10M+</h2>
-            <p class="text text--small text--regular text--muted">Trusted Wallets Investor</p>
-          </div>
-        </div>
-        <div class="media">
-          <div class="icon-container">
-            <svg class="media-icon">
-              <use xlink:href="images/media-icons-sprite.svg#bar-chart"></use>
-            </svg>
-          </div>
-          <div>
-            <h2>$30B</h2>
-            <p class="text text--small text--regular text--muted">Digital Currency Exchanged</p>
-          </div>
-        </div>
-        <div class="media">
-          <div class="icon-container">
-            <svg class="media-icon">
-              <use xlink:href="images/media-icons-sprite.svg#earth"></use>
-            </svg>
-          </div>
-          <div>
-            <h2>195</h2>
-            <p class="text text--small text--regular text--muted">Countries Supported</p>
-          </div>
-        </div>
-      </div> -->
-      <!-- Why you should choose? -->
-      <!-- <div class="grid grid--1x2 grid--centered">
-        <img id="gpu-illustration" src="images/gpu-illustration.svg" alt="Illustration of gpu"  data-rellax-speed="3" data-rellax-percentage="0.5" />
-        <div class="banner">
-          <h2 class="banner__title">Why you should choose CRAPPO</h2>
-          <p class="banner__text text text--small text--regular text--muted">Experience the next generation cryptocurrency platform. No financial borders, extra fees, and fake reviews.</p>
-          <button class="btn btn--accent">
-            <span class="text--standart text--medium">Learn More</span>
-          </button>
-        </div>
-      </div>
-      <img class="background-item-3" src="images/background-item-3.svg" alt="" />
-      <img class="background-item-4" src="images/background-item-4.svg" alt="" />
-      <img class="background-item-5" src="images/background-item-5.svg" alt="" />
-    </section> -->
-
-    <!-- Trade securely -->
     <section class="trade-securely">
-      <!-- <h2>Check how much you can earn</h2>
-      <p class="text text--standart text--regular text--muted">Let’s check your hash rate to see how much you will earn today, Exercitation veniam consequat sunt nostrud amet.</p>
-      <div class="calculate">
-        <div class="calculate__header">
-          <input type="text" placeholder="Enter your hash rate" />
-          <input list="rates" name="rate" id="rate" value="TH/s" />
-          <datalist id="rates">
-            <option value="TH/s" selected></option>
-          </datalist>
-
-          <button class="btn btn--accent">Calculate</button>
-        </div>
-        <div class="calculate__body">
-          <p class="text text--small text--medium text--accent text--uppercase">Estimated 24 Hour Revenue:</p>
-          <h3>0.055 130 59 ETH <span class="text--accent">($1275)</span></h3>
-          <p class="text text--small text--regular text--grey">Revenue will change based on mining difficulty and Ethereum price.</p>
-        </div>
-      </div> -->
-      <!-- <h2 class="text--primary">Trade securely and market the high growth cryptocurrencies.</h2> -->
       <div class="currencies">
         <div class="card card--secondary">
           <svg class="currency-icon">
@@ -213,67 +157,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Features -->
-    <!-- <section class="features">
-      <h2>Market sentiments, portfolio, and run the infrastructure of your choice</h2>
-
-      <div class="grid grid--1x2 grid--centered banner-bottom-margin">
-        <div class="banner banner--left">
-          <h2 class="banner__title">Invest Smart</h2>
-          <p class="banner__text text text--small text--regular text--muted">Get full statistic information about the behaviour of buyers and sellers will help you to make the decision.</p>
-          <button class="btn btn--accent">
-            <span class="text--standart text--medium">Learn More</span>
-          </button>
-        </div>
-        <img src="images/bitcoin-graph.svg" alt="Bitcoin graph" />
-      </div>
-
-      <div class="grid grid--1x2 grid--centered banner-bottom-margin">
-        <img src="images/statistics.svg" alt="Currency statistics" />
-        <div class="banner">
-          <h2 class="banner__title">Detailed Statistics</h2>
-          <p class="banner__text text text--small text--regular text--muted">View all mining related information in realtime, at any point at any location and decide which polls you want to mine in.</p>
-          <button class="btn btn--accent">
-            <span class="text--standart text--medium">Learn More</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="grid grid--1x2 grid--centered">
-        <div class="banner banner--left">
-          <h2 class="banner__title">Grow your profit and track your investments</h2>
-          <p class="banner__text text text--small text--regular text--muted">Use advanced analytical tools. Clear TradingView charts let you track current and historical profit investments.</p>
-          <button class="btn btn--accent">
-            <span class="text--standart text--medium">Learn More</span>
-          </button>
-        </div>
-        <img src="images/coin-table.svg" alt="Coin tables" />
-      </div>
-
-      <img class="background-item-6" src="images/background-item-6.svg" alt="" />
-      <img class="background-item-7" src="images/background-item-7.svg" alt="" />
-    </section> -->
-
-    <!-- Start mining -->
-    <!-- <section class="start-mining">
-      <div class="mining-container"> -->
-        <!-- <div class="mining-container__header">
-          <h3 class="mining-container__header__title">Start mining now</h3>
-          <p class="mining-container__header__description text text--small text--regular">Join now with CRAPPO to get the latest news and start mining now</p>
-        </div> -->
-        <!-- <div class="mining-container__subscribe">
-          <input type="text" placeholder="Enter your email" />
-          <button class="btn btn--white">Subscribe</button>
-        </div>
-        <img class="background-item-8" src="images/background-item-8.svg" alt="" />
-        <img class="background-item-9" src="images/background-item-9.svg" alt="" />
-      </div>
-      <img class="background-item-10" src="images/background-item-10.svg" alt="" />
-      <img class="background-item-11" src="images/background-item-11.svg" alt="" />
-    </section> -->
-
-    <!-- Footer -->
     <footer class="footer" id="footer" style="padding: 2rem 0.5 2rem 0.5;">
       <div class="footer__top" style="margin-bottom: 2rem;">
         <div class="footer__top__logo">
@@ -285,9 +168,6 @@
             <p class="nav__title text text--medium">Quick Link</p>
             <ul class="nav__list">
               <li class="nav__list__item text text--small text--regular"><a href="#header">Home</a></li>
-              <!-- <li class="nav__list__item text text--small text--regular">Products</li>
-              <li class="nav__list__item text text--small text--regular">About</li>
-              <li class="nav__list__item text text--small text--regular">Features</li> -->
               <li class="nav__list__item text text--small text--regular">Contact</li>
             </ul>
           </nav>
@@ -301,20 +181,6 @@
             </ul>
           </nav>
         </div>
-        <!-- <div class="footer__top__payment-systems">
-          <p class="payment-systems__title">We accept following payment systems</p>
-          <div class="payment-systems__payments">
-            <div class="payment-icon-container">
-              <img src="images/visa.svg" alt="Visa Card" />
-            </div>
-            <div class="payment-icon-container">
-              <img src="images/mastercard.svg" alt="Master Card" />
-            </div>
-            <div class="payment-icon-container">
-              <img src="images/bitcoin.svg" alt="Bitcoin" />
-            </div>
-          </div>
-        </div> -->
       </div>
       <div class="footer__bottom">
         <div class="footer__bottom__copyright text text--small text--regular">&copy;2023 DALIYA CRYPTO. All rights reserved.</div>
