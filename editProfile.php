@@ -58,6 +58,9 @@ body{
         if(!isset($_SESSION['user'])){
             header('Location: index.php');
             exit();
+        }else{
+            $user = unserialize($_SESSION["user"]);
+            echo var_dump($user);
         }
     ?>
 
@@ -78,8 +81,8 @@ body{
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#p" role="tab">
                       Password
                     </a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
-                      Delete account
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="wallet.php" role="tab">
+                      Wallet
                     </a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="index.php" role="tab">
                       Exit 
@@ -119,7 +122,7 @@ body{
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label for="inputUsername">Email</label>
-                                            <input type="text" class="form-control mt-2" id="inputUsername" placeholder="someone@example.com">
+                                            <input type="text" class="form-control mt-2" id="inputUsername" name="email" value="<?php echo $user->email; ?>">
                                         </div>
 
                                     </div>
@@ -159,15 +162,15 @@ body{
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputFirstName">First name</label>
-                                        <input type="text" class="form-control mb-4" id="inputFirstName" placeholder="First name">
+                                        <input type="text" class="form-control mb-4" id="inputFirstName" name="firstName" value="<?php echo $user->firstName; ?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="inputLastName">Last name</label>
-                                        <input type="text" class="form-control mb-4" id="inputLastName" placeholder="Last name">
+                                        <input type="text" class="form-control mb-4" id="inputLastName" name="lastName" value="<?php echo $user->lastName; ?>">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="inputLastName">Phone Number</label>
-                                        <input type="text" class="form-control mb-4" id="inputLastName" placeholder="Phone ">
+                                        <label for="inputPhoneNumber">Phone Number</label>
+                                        <input type="text" class="form-control mb-4" id="inputPhoneNumber" name="phone" value="<?php echo $user->phoneNumber; ?>">
                                     </div>
                                 
                                   </div>
@@ -183,27 +186,25 @@ body{
                             <!-- Form Group (current password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="currentPassword">Current Password</label>
-                                <input class="form-control" id="currentPassword" type="password" placeholder="Enter current password">
+                                <input class="form-control" id="currentPassword" type="password"  name="currentPass" placeholder="Enter current password">
                             </div>
                             <!-- Form Group (new password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="newPassword">New Password</label>
-                                <input class="form-control" id="newPassword" type="password" placeholder="Enter new password">
+                                <input class="form-control" id="newPassword" type="password" name="newPass" placeholder="Enter new password">
                             </div>
                             <!-- Form Group (confirm password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="confirmPassword">Confirm Password</label>
-                                <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm new password">
+                                <input class="form-control" id="confirmPassword" type="password" name="newRepeatedPass" placeholder="Confirm new password">
                             </div>
                             <button class="btn btn-primary btn-sm" type="button">Save Password</button>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
 </div>
     
 </body>

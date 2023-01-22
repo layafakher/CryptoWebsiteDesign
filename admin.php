@@ -23,7 +23,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+   .table-heading , .table-data {padding: 1vw 2vw;}
+  </style>
 </head>
+
 
 <body>
 
@@ -33,11 +37,6 @@
 
   <header class="header" data-header>
     <div class="container">
-
-      <!-- <a href="#" class="logo">
-        <img src="./assets/images/logo.svg" width="32" height="32" alt="Cryptex logo">
-        Cryptex
-      </a> -->
       <div class="logo">
           <img src="images/logo.svg" alt="Croppo brand logo" />
           <span class="text text--medium">DALIYA CRYPTO</span>
@@ -48,18 +47,12 @@
           <li class="navbar-item ">
             <a href="#" class="navbar-link " data-nav-link>Dashboard</a>
           </li>
-
-
           <li class="navbar-item" >
-
             <a href="#u" class="navbar-link" data-nav-link>Users</a>
-
           </li>
-
           <li class="navbar-item">
             <a href="#p" class="navbar-link" data-nav-link>Pending Oerders</a>
           </li>
-
         </ul>
       </nav>
 
@@ -79,44 +72,32 @@
     </div>
   </header>
 
-
-
-
-
   <main>
     <article>
 
       <!--
         - #HERO
       -->
-
       <section class="section hero" aria-label="hero" data-section>
         <div class="container">
 
 
         </div>
       </section>
-
       <!--
         - #TREND
       -->
-
       <section class="section trend" aria-label="crypto trend" data-section id="p">
         <div class="container">
 
           <div class="trend-tab">
 
             <ul class="tab-nav">
-
               <li>
                 <button class="tab-btn" style="font-size:3rem;">Pending Orders </button>
               </li>
-
-
             </ul>
-
             <ul class="tab-content">
-
               <li>
                 <div class="trend-card">
 
@@ -132,51 +113,34 @@
 
                   <div class="card-analytics " style="margin-bottom:5px;">
                     <data class="current-price" value="36641.20">36,641.20</data>
-
-
                     </div>
                     <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                    <data class="current-price " value="36641.20" style="margin-bottom:1rem;">UserID = 1</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">First Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Last Name = adfs</data>
-
-
+                    <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
+                    <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
                     <button class="tab-btn active">Cancel</button>
-
                 </div>
               </li>
-
               <li>
                 <div class="trend-card">
 
                   <div class="card-title-wrapper">
                     <img src="./assets/images/coin-2.svg" width="24" height="24" alt="ethereum logo">
-
                     <a href="#" class="card-title">
                       Ethereum <span class="span">ETH/USD</span>
                     </a>
                   </div>
-
                   <data class="card-value" value="3480.04">USD 3,480.04</data>
-
                   <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
+                  <data class="current-price" value="36641.20">36,641.20</data>
                   </div>
                   <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">UserID = 1</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">First Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Last Name = adfs</data>
-
-
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
                 <button class="tab-btn active">Cancel</button>
-
                 </div>
               </li>
-
               <li>
                 <div class="trend-card">
-
                   <div class="card-title-wrapper">
                     <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
 
@@ -184,20 +148,15 @@
                       Tether <span class="span">USDT/USD</span>
                     </a>
                   </div>
-
                   <data class="card-value" value="1.00">USD 1.00</data>
 
                   <div class="card-analytics" style="margin-bottom:5px;">
                     <data class="current-price" value="36641.20">36,641.20</data>
-
                   </div>
                   <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">UserID = 1</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">First Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Last Name = adfs</data>
-
-
-                <button class="tab-btn active">Cancel</button>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
+                  <button class="tab-btn active">Cancel</button>
 
                 </div>
               </li>
@@ -219,9 +178,8 @@
 
                   </div>
                   <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">UserID = 1</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">First Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Last Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
 
                 <button class="tab-btn active">Cancel</button>
 
@@ -245,9 +203,8 @@
 
                   </div>
                   <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">UserID = 1</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">First Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Last Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
 
 
                 <button class="tab-btn active">Cancel</button>
@@ -272,9 +229,8 @@
 
                   </div>
                   <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">UserID = 1</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">First Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Last Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
 
 
                 <button class="tab-btn active">Cancel</button>
@@ -300,9 +256,8 @@
 
                   </div>
                   <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">UserID = 1</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">First Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Last Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
+                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
 
 
                 <button class="tab-btn active">Cancel</button>
@@ -316,20 +271,9 @@
 
         </div>
       </section>
-
-
-
-
-
-
-
-
-
-
       <!--
         - #MARKET
       -->
-
       <section class="section market" aria-label="market update" data-section id="u">
         <div class="container">
 
@@ -367,6 +311,8 @@
                   <th class="table-heading" scope="col">Phone</th>
 
                   <th class="table-heading" scope="col">Email</th>
+                  <th class="table-heading" scope="col">Balance</th>
+
 
                   <!-- <th class="table-heading" scope="col">Last 7 Days</th> -->
 
@@ -390,25 +336,124 @@
 
                   <td class="table-data">
                     <div class="wrapper">
-                      <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img">
+                      <!-- <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img"> -->
 
                       <h3>
-                        <a href="#" class="coin-name">Bitcoin <span class="span">BTC</span></a>
+                        <a href="#" class="coin-name">Danial</a>
                       </h3>
                     </div>
                   </td>
 
-                  <td class="table-data last-price">$56,623.54</td>
+                  <td class="table-data last-price">chekani</td>
 
-                  <td class="table-data last-update green">+1.45%</td>
+                  <td class="table-data last-update">09391165361</td>
 
-                  <td class="table-data market-cap">$880,423,640,582</td>
+                  <td class="table-data market-cap">danial@gmail.com</td>
 
 
 
                   <td class="table-data">
-                    <button class="btn btn-outline">Edit</button>
+                    <div >$254,058,960</div>
                   </td>
+
+                </tr>
+                <tr class="table-row">
+
+                <td class="table-data">
+                  <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
+
+                  </button>
+                </td>
+
+                <th class="table-data rank" scope="row">2</th>
+
+                <td class="table-data">
+                  <div class="wrapper">
+                    <!-- <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img"> -->
+
+                    <h3>
+                      <a href="#" class="coin-name">Danial</a>
+                    </h3>
+                  </div>
+                </td>
+
+                <td class="table-data last-price">chekani</td>
+
+                <td class="table-data last-update">09391165361</td>
+
+                <td class="table-data market-cap">danial@gmail.com</td>
+
+
+
+                <td class="table-data">
+                  <div >$254,058,960</div>
+                </td>
+
+                </tr>
+                <tr class="table-row">
+
+                <td class="table-data">
+                  <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
+
+                  </button>
+                </td>
+
+                <th class="table-data rank" scope="row">3</th>
+
+                <td class="table-data">
+                  <div class="wrapper">
+                    <!-- <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img"> -->
+
+                    <h3>
+                      <a href="#" class="coin-name">Danial</a>
+                    </h3>
+                  </div>
+                </td>
+
+                <td class="table-data last-price">chekani</td>
+
+                <td class="table-data last-update">09391165361</td>
+
+                <td class="table-data market-cap">danial@gmail.com</td>
+
+
+
+                <td class="table-data">
+                  <div >$254,058,960</div>
+                </td>
+
+                </tr>
+                <tr class="table-row">
+
+                <td class="table-data">
+                  <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
+
+                  </button>
+                </td>
+
+                <th class="table-data rank" scope="row">4</th>
+
+                <td class="table-data">
+                  <div class="wrapper">
+                    <!-- <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img"> -->
+
+                    <h3>
+                      <a href="#" class="coin-name">Danial</a>
+                    </h3>
+                  </div>
+                </td>
+
+                <td class="table-data last-price">chekani</td>
+
+                <td class="table-data last-update">09391165361</td>
+
+                <td class="table-data market-cap">danial@gmail.com</td>
+
+
+
+                <td class="table-data">
+                  <div >$254,058,960</div>
+                </td>
 
                 </tr>
 
@@ -541,23 +586,13 @@
                   <td class="table-data last-update green">+1.45%</td>
 
                   <td class="table-data market-cap">$880,423,640,582</td>
-
-                  <!-- <td class="table-data">
-                    <img src="./assets/images/chart-1.svg" width="100" height="40" alt="profit chart" class="chart">
-                  </td> -->
-
                   <td class="table-data">
                     <button class="btn btn-outline">Buy</button>
                   </td>
-
                 </tr>
-
                 <tr class="table-row">
-
                   <td class="table-data">
                     <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                      <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon> -->
                     </button>
                   </td>
 
@@ -578,11 +613,6 @@
                   <td class="table-data last-update red">-2.22%</td>
 
                   <td class="table-data market-cap">$880,423,640,582</td>
-
-                  <!-- <td class="table-data">
-                    <img src="./assets/images/chart-2.svg" width="100" height="40" alt="loss chart" class="chart">
-                  </td> -->
-
                   <td class="table-data">
                     <button class="btn btn-outline">Buy</button>
                   </td>
@@ -593,8 +623,6 @@
 
                   <td class="table-data">
                     <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                      <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon> -->
                     </button>
                   </td>
 
@@ -615,11 +643,6 @@
                   <td class="table-data last-update green">+0.8%</td>
 
                   <td class="table-data market-cap">$880,423,640,582</td>
-
-                  <!-- <td class="table-data">
-                    <img src="./assets/images/chart-1.svg" width="100" height="40" alt="profit chart" class="chart">
-                  </td> -->
-
                   <td class="table-data">
                     <button class="btn btn-outline">Buy</button>
                   </td>
@@ -630,8 +653,6 @@
 
                   <td class="table-data">
                     <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                      <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon> -->
                     </button>
                   </td>
 
@@ -652,23 +673,13 @@
                   <td class="table-data last-update green">+1.41%</td>
 
                   <td class="table-data market-cap">$880,423,640,582</td>
-
-                  <!-- <td class="table-data">
-                    <img src="./assets/images/chart-1.svg" width="100" height="40" alt="profit chart" class="chart">
-                  </td> -->
-
                   <td class="table-data">
                     <button class="btn btn-outline">Trade</button>
                   </td>
-
                 </tr>
-
               </tbody>
-
             </table>
-
           </div>
-
         </div>
       </section>
     </article>
