@@ -60,7 +60,7 @@
 
       $result = $conn->query($sql);
 
-      $user = createUserObject($_POST["firstName"],$_POST["lastName"],$_POST["phoneNumber"],$_POST["email"],false);
+      $user = createUserObject($_POST["firstName"],$_POST["lastName"],$_POST["phoneNumber"],$_POST["email"],0,false);
 
       $_SESSION['user'] = serialize($user);
       header('Location: home.php');

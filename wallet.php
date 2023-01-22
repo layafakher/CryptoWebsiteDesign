@@ -31,6 +31,18 @@
     - #HEADER
   -->
 
+  <?php include "database.php";
+  session_start();
+
+  if (!isset($_SESSION['user'])) {
+    header('Location: index.php');
+    exit();
+  }
+
+  $user = unserialize($_SESSION["user"]);
+
+  ?>
+
   <header class="header" data-header>
     <div class="container">
 
@@ -39,9 +51,9 @@
         Cryptex
       </a> -->
       <div class="logo">
-          <img src="images/logo.svg" alt="Croppo brand logo" />
-          <span class="text text--medium">DALIYA CRYPTO</span>
-        </div>
+        <img src="images/logo.svg" alt="Croppo brand logo" />
+        <span class="text text--medium">DALIYA CRYPTO</span>
+      </div>
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
@@ -59,19 +71,19 @@
             <a href="#" class="navbar-link" data-nav-link>Sell Crypto</a>
           </li> -->
 
-          <li class="navbar-item" >
+          <li class="navbar-item">
             <form action="editProfile.php">
-            <button type="submit" >
-            <a  class="navbar-link" data-nav-link>Profile</a>
-            </button>
+              <button type="submit">
+                <a class="navbar-link" data-nav-link>Profile</a>
+              </button>
             </form>
           </li>
-<!--
+          <!--
           <li class="navbar-item">
             <a href="#" class="navbar-link" data-nav-link>BITUSDT</a>
           </li> -->
           <li class="navbar-item">
-            <a href="index.php" class="navbar-link" data-nav-link>LogOut</a>
+            <a href="home.php?logout=true" type="submit" class="navbar-link" data-nav-link name="logout">LogOut</a>
           </li>
 
         </ul>
@@ -84,8 +96,8 @@
       </button>
 
       <form action="wallet.php">
-        <button >
-        <a  class="navbar-link active">Wallet</a>
+        <button>
+          <a class="navbar-link active">Wallet</a>
         </button>
       </form>
 
@@ -109,10 +121,10 @@
 
           <div class="hero-content">
 
-            <h1 class="h1 hero-title">Ballance = $523</h1>
+            <?php echo "<h1 class='h1 hero-title'>Ballance = $" . $user->balance . "</h1>" ?>
 
             <p class="hero-text">
-            DALIYA CRYPTO is the easiest, safest, and fastest way to buy & sell crypto asset exchange.
+              DALIYA CRYPTO is the easiest, safest, and fastest way to buy & sell crypto asset exchange.
             </p>
 
             <!-- <a href="#" class="btn btn-primary">Sell</a> -->
@@ -148,174 +160,68 @@
 
             </ul>
 
-            <ul class="tab-content">
+            <ul class="tab-content" id="wallet_items">
 
-              <li>
-                <div class="trend-card">
+              <?php
+                $walletItems = array();
+                $coins = array();
 
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-1.svg" width="24" height="24" alt="bitcoin logo">
+                $sql = "SELECT * FROM `holding_currency` INNER JOIN `user` ON `holding_currency`.`user_id` = `user`.`id` WHERE `user`.`email` = '".$user->email."'";
+                $result = $conn->query($sql);
+                
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    $walletItems[] = $row;
+                  }
+                }
+                
+                $sql = 'SELECT * FROM coin';
 
-                    <a href="#" class="card-title">
-                      Bitcoin <span class="span">BTC/USD</span>
-                    </a>
-                  </div>
+                $result = $conn->query($sql);
+          
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                      $coins[] = $row;
+                    }
+                }
 
-                  <data class="card-value" value="46168.95">USD 46,168.95</data>
-
-                  <div class="card-analytics " style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-
-                    </div>
-                    <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-
-                    <button class="tab-btn active">Sell</button>
-
-                </div>
-              </li>
-
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-2.svg" width="24" height="24" alt="ethereum logo">
-
-                    <a href="#" class="card-title">
-                      Ethereum <span class="span">ETH/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="3480.04">USD 3,480.04</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-
-                <button class="tab-btn active">Sell</button>
-
-                </div>
-              </li>
-
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
-
-                    <a href="#" class="card-title">
-                      Tether <span class="span">USDT/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="1.00">USD 1.00</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-
-                <button class="tab-btn active">Sell</button>
-
-                </div>
-              </li>
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
-
-                    <a href="#" class="card-title">
-                      Tether <span class="span">USDT/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="1.00">USD 1.00</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-
-                <button class="tab-btn active">Sell</button>
-
-                </div>
-              </li>
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
-
-                    <a href="#" class="card-title">
-                      Tether <span class="span">USDT/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="1.00">USD 1.00</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-
-                <button class="tab-btn active">Sell</button>
-
-                </div>
-              </li>
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
-
-                    <a href="#" class="card-title">
-                      Tether <span class="span">USDT/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="1.00">USD 1.00</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-
-                <button class="tab-btn active">Sell</button>
-
-                </div>
-              </li>
-
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-4.svg" width="24" height="24" alt="bnb logo">
-
-                    <a href="#" class="card-title">
-                      BNB <span class="span">BNB/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="443.56">USD 443.56</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-
-                <button class="tab-btn active">Sell</button>
-
-                </div>
-              </li>
-
+                foreach ($walletItems as $item) {
+                  $price = 0;
+                  foreach($coins as $coin){
+                    if($coin["name"] == $item["name"]){
+                      $price = (float)$coin["price"];
+                    }
+                  }
+                  echo
+                  '
+                    <li>
+                      <div class="trend-card">
+    
+                        <div class="card-title-wrapper">
+                          <img src="./assets/images/'.$item["name"].'.svg" width="24" height="24" alt="'.$item["name"].' logo">
+    
+                          <a href="#" class="card-title">
+                            '.$item["name"].' <span class="span">'.$item["name"].'/USD</span>
+                          </a>
+                        </div>
+    
+                        <data class="card-value" value="46168.95">USD '.number_format($price * (float)$item["amount"]).'</data>
+    
+                        <div class="card-analytics " style="margin-bottom:5px;">
+                          <data class="current-price" value="'.number_format($price).'">'.number_format($price).'</data>
+    
+    
+                          </div>
+                          <data class="current-price " value="'.$item["amount"].'" style="margin-bottom:1rem;">Amount = '.$item["amount"].'</data>
+    
+                          <button class="tab-btn active">Sell</button>
+    
+                      </div>
+                    </li>
+                  ';
+                }
+              
+              ?>
             </ul>
 
           </div>
@@ -335,23 +241,23 @@
       -->
 
 
-                </tr>
+      </tr>
 
-                <tr class="table-row">
+      <tr class="table-row">
 
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
+        <td class="table-data">
+          <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
 
 
-                </tr>
+      </tr>
 
-                <tr class="table-row">
+      <tr class="table-row">
 
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                      <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
+        <td class="table-data">
+          <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
+            <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
                       <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon> -->
-                    <!-- </button>
+            <!-- </button>
                   </td>
 
                   <th class="table-data rank" scope="row">7</th>
@@ -372,10 +278,10 @@
 
                   <td class="table-data market-cap">$880,423,640,582</td> -->
 
-                  <!-- <td class="table-data">
+            <!-- <td class="table-data">
                     <img src="./assets/images/chart-1.svg" width="100" height="40" alt="profit chart" class="chart">
                   </td> -->
-<!--
+            <!--
                   <td class="table-data">
                     <button class="btn btn-outline">Buy</button>
                   </td>
@@ -386,9 +292,9 @@
 
                   <td class="table-data">
                     <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav> -->
-                      <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
+            <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
                       <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon> -->
-                    <!-- </button>
+            <!-- </button>
                   </td>
 
                   <th class="table-data rank" scope="row">8</th>
@@ -409,10 +315,10 @@
 
                   <td class="table-data market-cap">$880,423,640,582</td> -->
 
-                  <!-- <td class="table-data">
+            <!-- <td class="table-data">
                     <img src="./assets/images/chart-1.svg" width="100" height="40" alt="profit chart" class="chart">
                   </td> -->
-<!--
+            <!--
                   <td class="table-data">
                     <button class="btn btn-outline">Trade</button>
                   </td>
@@ -432,22 +338,22 @@
 
 
 
-      <!--
+            <!--
         - #INSTRUCTION
       -->
 
 
-      <!--
+            <!--
         - #ABOUT
       -->
 
 
 
-      <!--
+            <!--
         - #APP
       -->
 
-      <!-- <section class="section app" aria-label="app" data-section>
+            <!-- <section class="section app" aria-label="app" data-section>
         <div class="container">
 
           <div class="app-content">
@@ -521,7 +427,7 @@
     - #FOOTER
   -->
 
-  <footer class="footer" >
+  <footer class="footer">
 
 
     <div class="footer-bottom">
