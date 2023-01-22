@@ -23,6 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 </head>
 
 <body>
@@ -214,7 +215,7 @@
                           </div>
                           <data class="current-price " value="'.$item["amount"].'" style="margin-bottom:1rem;">Amount = '.$item["amount"].'</data>
     
-                          <button class="tab-btn active">Sell</button>
+                          <button class="tab-btn active promptBtn" onclick="pr('."'sell'".',\''.$item["name"].'\')">Sell</button>
     
                       </div>
                     </li>
@@ -458,6 +459,9 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <script src="./prompt.js"></script>
 
 </body>
 

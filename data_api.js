@@ -1,6 +1,42 @@
 const container = document.getElementById("data_container");
 const ids = ["bitcoin", "ethereum", "tether", "binancecoin", "solana", "ripple", "cardano", "avalanche-2", "dogecoin", "polkadot", "uniswap", "monero", "stellar", "shiba-inu"]
 
+function pr(buyOrSell,coinName) {
+    Swal.fire({
+        title: 'Enter amount to ' + buyOrSell + ' ' + coinName,
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Buy',
+        showLoaderOnConfirm: true,
+
+        preConfirm: (login) => {
+            return fetch(`//api.github.com/users/${login}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText)
+                    }
+                    return response.json()
+                })
+                .catch(error => {
+                    Swal.showValidationMessage(
+                        `Request pending: ${error}`
+                    )
+                })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: `${result.value.login}'s avatar`,
+                imageUrl: result.value.avatar_url
+            })
+        }
+    })
+};
+
 function updateData(coins) {
     container.innerHTML = "";
     let i = 1;
@@ -8,6 +44,13 @@ function updateData(coins) {
         appendRow(coin, i);
         i++;
     })
+
+    buttons = document.getElementsByClassName("promptBtn");
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+            pr('buy',coins[i].name);
+        })
+    }
 }
 
 function appendRow(coin, i) {
@@ -37,7 +80,7 @@ function appendRow(coin, i) {
         <td class="table-data market-cap">$${Math.floor(Number(coin.market_cap)).toLocaleString()}</td>
 
         <td class="table-data">
-        <button class="btn btn-outline">Buy</button>
+        <button class="btn btn-outline promptBtn">Buy</button>
         </td>
 
     </tr>
