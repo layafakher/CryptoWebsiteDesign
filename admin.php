@@ -31,16 +31,37 @@
 
 <body>
 
-  <!--
-    - #HEADER
-  -->
+  <?php include "database.php";
+
+    session_start();
+
+    if(!isset($_SESSION['user'])){
+      header('Location: index.php');
+      exit(); 
+    }
+    else{
+      $user = unserialize($_SESSION["user"]);;
+      if(!filter_var($user->isAdmin, FILTER_VALIDATE_BOOLEAN)){
+        header('Location: index.php');
+        exit();
+      }
+    }
+
+    if(isset($_POST["cancelOrder"])){
+
+      $sql = "DELETE FROM `crypto_order` WHERE `id` = ".(int)$_POST["cancelOrder"];
+
+      $conn->query($sql);
+    }
+
+  ?>
 
   <header class="header" data-header>
     <div class="container">
-      <div class="logo">
-          <img src="images/logo.svg" alt="Croppo brand logo" />
-          <span class="text text--medium">DALIYA CRYPTO</span>
-        </div>
+    <div class="logo" style="cursor: pointer;" onclick="location.href = 'index.php'">
+        <img src="images/logo.svg" alt="Croppo brand logo" />
+        <span class="text text--medium">DALIYA CRYPTO</span>
+      </div>
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
@@ -98,173 +119,49 @@
               </li>
             </ul>
             <ul class="tab-content">
-              <li>
-                <div class="trend-card">
+              <?php
+                $orders = array();
 
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-1.svg" width="24" height="24" alt="bitcoin logo">
+                $sql = "SELECT `user`.`first_name`, `user`.`last_name`, `coin`.`name`, `crypto_order`.`amount` , `crypto_order`.`order_price`, `crypto_order`.`order_date`, `crypto_order`.`id` FROM `crypto_order` INNER JOIN `coin` ON `crypto_order`.`coin_id` = `coin`.`id` INNER JOIN `user` ON `crypto_order`.`user_id` = `user`.`id` WHERE `status` = 'pending'";
+                $result = $conn->query($sql);
+                
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    $orders[] = $row;
+                  }
+                }
 
-                    <a href="#" class="card-title">
-                      Bitcoin <span class="span">BTC/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="46168.95">USD 46,168.95</data>
-
-                  <div class="card-analytics " style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-                    </div>
-                    <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                    <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
-                    <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
-                    <button class="tab-btn active">Cancel</button>
-                </div>
-              </li>
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-2.svg" width="24" height="24" alt="ethereum logo">
-                    <a href="#" class="card-title">
-                      Ethereum <span class="span">ETH/USD</span>
-                    </a>
-                  </div>
-                  <data class="card-value" value="3480.04">USD 3,480.04</data>
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                  <data class="current-price" value="36641.20">36,641.20</data>
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
-                <button class="tab-btn active">Cancel</button>
-                </div>
-              </li>
-              <li>
-                <div class="trend-card">
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
-
-                    <a href="#" class="card-title">
-                      Tether <span class="span">USDT/USD</span>
-                    </a>
-                  </div>
-                  <data class="card-value" value="1.00">USD 1.00</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
-                  <button class="tab-btn active">Cancel</button>
-
-                </div>
-              </li>
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
-
-                    <a href="#" class="card-title">
-                      Tether <span class="span">USDT/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="1.00">USD 1.00</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
-
-                <button class="tab-btn active">Cancel</button>
-
-                </div>
-              </li>
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
-
-                    <a href="#" class="card-title">
-                      Tether <span class="span">USDT/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="1.00">USD 1.00</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
-
-
-                <button class="tab-btn active">Cancel</button>
-
-                </div>
-              </li>
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-3.svg" width="24" height="24" alt="tether logo">
-
-                    <a href="#" class="card-title">
-                      Tether <span class="span">USDT/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="1.00">USD 1.00</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
-
-
-                <button class="tab-btn active">Cancel</button>
-
-                </div>
-              </li>
-
-              <li>
-                <div class="trend-card">
-
-                  <div class="card-title-wrapper">
-                    <img src="./assets/images/coin-4.svg" width="24" height="24" alt="bnb logo">
-
-                    <a href="#" class="card-title">
-                      BNB <span class="span">BNB/USD</span>
-                    </a>
-                  </div>
-
-                  <data class="card-value" value="443.56">USD 443.56</data>
-
-                  <div class="card-analytics" style="margin-bottom:5px;">
-                    <data class="current-price" value="36641.20">36,641.20</data>
-
-                  </div>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Amount = 1.2</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Name = adfs</data>
-                  <data class="current-price " value="36641.20" style="margin-bottom:1rem;">Email = daial@gmail.com</data>
-
-
-                <button class="tab-btn active">Cancel</button>
-
-                </div>
-              </li>
-
+                foreach ($orders as $order) {
+                  echo
+                  '
+                    <li>
+                      <div class="trend-card">
+      
+                        <div class="card-title-wrapper">
+                          <img src="./assets/images/'.$order["name"].'.svg" width="24" height="24" alt="'.$order["name"].' logo">
+      
+                          <a href="#" class="card-title">
+                            '.$order["name"].' <span class="span">'.$order["name"].'/USD</span>
+                          </a>
+                        </div>
+      
+                        <data class="card-value" value="46168.95">USD '.number_format((float)$order["order_price"] * (float)$order["amount"],2).'</data>
+      
+                          <data class="current-price " style="margin-bottom:1rem;">Price = '.number_format($order["order_price"],3).'</data>
+                          <data class="current-price " style="margin-bottom:1rem;">Amount = '.$order["amount"].'</data>
+                          <data class="current-price " style="margin-bottom:1rem;">User = '.$order["first_name"]." ".$order["last_name"].'</data>
+                          <data class="current-price " style="margin-bottom:1.5rem;">Order Date : '.$order["order_date"].'</data>
+                          <form method="post" action="admin.php">
+                            <input type="hidden" name="cancelOrder" value="'.$order["id"].'" />
+                            <button class="tab-btn active" type="submit">Cancel</button>
+                          </form>
+                      </div>
+                    </li>
+                  ';
+                }
+              
+              ?>
+              
             </ul>
 
           </div>
@@ -324,359 +221,54 @@
 
               <tbody class="table-body">
 
-                <tr class="table-row">
+                <?php
+                  $users = array();
+
+                  $sql = "SELECT * FROM `user`";
+                  $result = $conn->query($sql);
+                  
+                  if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                      $users[] = $row;
+                    }
+                  }
+
+                  foreach ($users as $user) {
+                    echo
+                    '
+                      <tr class="table-row">
+
+                        <td class="table-data">
+                          <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
+                          </button>
+                        </td>
+      
+                        <th class="table-data rank" scope="row">'.$user["id"].'</th>
+      
+                        <td class="table-data">
+                          <div class="wrapper">
+                            <h3>
+                              <a href="#" class="coin-name">'.$user["first_name"].'</a>
+                            </h3>
+                          </div>
+                        </td>
+      
+                        <td class="table-data last-price">'.$user["last_name"].'</td>
+      
+                        <td class="table-data last-update">'.$user["phoneNumber"].'</td>
+      
+                        <td class="table-data market-cap">'.$user["email"].'</td>
+
+                        <td class="table-data">
+                          <div >'.number_format((float)$user["balance"],2).'</div>
+                        </td>
+      
+                      </tr>
+                    ';
+                  }
+                
+                ?>
 
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-
-                    </button>
-                  </td>
-
-                  <th class="table-data rank" scope="row">1</th>
-
-                  <td class="table-data">
-                    <div class="wrapper">
-                      <!-- <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img"> -->
-
-                      <h3>
-                        <a href="#" class="coin-name">Danial</a>
-                      </h3>
-                    </div>
-                  </td>
-
-                  <td class="table-data last-price">chekani</td>
-
-                  <td class="table-data last-update">09391165361</td>
-
-                  <td class="table-data market-cap">danial@gmail.com</td>
-
-
-
-                  <td class="table-data">
-                    <div >$254,058,960</div>
-                  </td>
-
-                </tr>
-                <tr class="table-row">
-
-                <td class="table-data">
-                  <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-
-                  </button>
-                </td>
-
-                <th class="table-data rank" scope="row">2</th>
-
-                <td class="table-data">
-                  <div class="wrapper">
-                    <!-- <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img"> -->
-
-                    <h3>
-                      <a href="#" class="coin-name">Danial</a>
-                    </h3>
-                  </div>
-                </td>
-
-                <td class="table-data last-price">chekani</td>
-
-                <td class="table-data last-update">09391165361</td>
-
-                <td class="table-data market-cap">danial@gmail.com</td>
-
-
-
-                <td class="table-data">
-                  <div >$254,058,960</div>
-                </td>
-
-                </tr>
-                <tr class="table-row">
-
-                <td class="table-data">
-                  <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-
-                  </button>
-                </td>
-
-                <th class="table-data rank" scope="row">3</th>
-
-                <td class="table-data">
-                  <div class="wrapper">
-                    <!-- <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img"> -->
-
-                    <h3>
-                      <a href="#" class="coin-name">Danial</a>
-                    </h3>
-                  </div>
-                </td>
-
-                <td class="table-data last-price">chekani</td>
-
-                <td class="table-data last-update">09391165361</td>
-
-                <td class="table-data market-cap">danial@gmail.com</td>
-
-
-
-                <td class="table-data">
-                  <div >$254,058,960</div>
-                </td>
-
-                </tr>
-                <tr class="table-row">
-
-                <td class="table-data">
-                  <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-
-                  </button>
-                </td>
-
-                <th class="table-data rank" scope="row">4</th>
-
-                <td class="table-data">
-                  <div class="wrapper">
-                    <!-- <img src="./assets/images/coin-1.svg" width="20" height="20" alt="Bitcoin logo" class="img"> -->
-
-                    <h3>
-                      <a href="#" class="coin-name">Danial</a>
-                    </h3>
-                  </div>
-                </td>
-
-                <td class="table-data last-price">chekani</td>
-
-                <td class="table-data last-update">09391165361</td>
-
-                <td class="table-data market-cap">danial@gmail.com</td>
-
-
-
-                <td class="table-data">
-                  <div >$254,058,960</div>
-                </td>
-
-                </tr>
-
-                <tr class="table-row">
-
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                    </button>
-                  </td>
-
-                  <th class="table-data rank" scope="row">2</th>
-
-                  <td class="table-data">
-                    <div class="wrapper">
-                      <img src="./assets/images/coin-2.svg" width="20" height="20" alt="Ethereum logo" class="img">
-
-                      <h3>
-                        <a href="#" class="coin-name">Ethereum <span class="span">ETH</span></a>
-                      </h3>
-                    </div>
-                  </td>
-
-                  <td class="table-data last-price">$56,623.54</td>
-
-                  <td class="table-data last-update red">-5.12%</td>
-
-                  <td class="table-data market-cap">$880,423,640,582</td>
-
-
-
-                  <td class="table-data">
-                    <button class="btn btn-outline">Edit</button>
-                  </td>
-
-                </tr>
-
-                <tr class="table-row">
-
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                    </button>
-                  </td>
-
-                  <th class="table-data rank" scope="row">3</th>
-
-                  <td class="table-data">
-                    <div class="wrapper">
-                      <img src="./assets/images/coin-3.svg" width="20" height="20" alt="Tether logo" class="img">
-
-                      <h3>
-                        <a href="#" class="coin-name">Tether <span class="span">USDT/USD</span></a>
-                      </h3>
-                    </div>
-                  </td>
-
-                  <td class="table-data last-price">$56,623.54</td>
-
-                  <td class="table-data last-update green">+1.45%</td>
-
-                  <td class="table-data market-cap">$880,423,640,582</td>
-
-
-
-                  <td class="table-data">
-                    <button class="btn btn-outline">Buy</button>
-                  </td>
-
-                </tr>
-
-                <tr class="table-row">
-
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                      <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon> -->
-                    </button>
-                  </td>
-
-                  <th class="table-data rank" scope="row">4</th>
-
-                  <td class="table-data">
-                    <div class="wrapper">
-                      <img src="./assets/images/coin-4.svg" width="20" height="20" alt="BNB logo" class="img">
-
-                      <h3>
-                        <a href="#" class="coin-name">BNB <span class="span">BNB/USD</span></a>
-                      </h3>
-                    </div>
-                  </td>
-
-                  <td class="table-data last-price">$56,623.54</td>
-
-                  <td class="table-data last-update red">-3.75%%</td>
-
-                  <td class="table-data market-cap">$880,423,640,582</td>
-
-                  <!-- <td class="table-data">
-                    <img src="./assets/images/chart-2.svg" width="100" height="40" alt="loss chart" class="chart">
-                  </td> -->
-
-                  <td class="table-data">
-                    <button class="btn btn-outline">Buy</button>
-                  </td>
-
-                </tr>
-
-                <tr class="table-row">
-
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                      <!-- <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon> -->
-                    </button>
-                  </td>
-
-                  <th class="table-data rank" scope="row">5</th>
-
-                  <td class="table-data">
-                    <div class="wrapper">
-                      <img src="./assets/images/coin-5.svg" width="20" height="20" alt="Solana logo" class="img">
-
-                      <h3>
-                        <a href="#" class="coin-name">Solana <span class="span">SOL</span></a>
-                      </h3>
-                    </div>
-                  </td>
-
-                  <td class="table-data last-price">$56,623.54</td>
-
-                  <td class="table-data last-update green">+1.45%</td>
-
-                  <td class="table-data market-cap">$880,423,640,582</td>
-                  <td class="table-data">
-                    <button class="btn btn-outline">Buy</button>
-                  </td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                    </button>
-                  </td>
-
-                  <th class="table-data rank" scope="row">6</th>
-
-                  <td class="table-data">
-                    <div class="wrapper">
-                      <img src="./assets/images/coin-6.svg" width="20" height="20" alt="XRP logo" class="img">
-
-                      <h3>
-                        <a href="#" class="coin-name">XRP <span class="span">XRP</span></a>
-                      </h3>
-                    </div>
-                  </td>
-
-                  <td class="table-data last-price">$56,623.54</td>
-
-                  <td class="table-data last-update red">-2.22%</td>
-
-                  <td class="table-data market-cap">$880,423,640,582</td>
-                  <td class="table-data">
-                    <button class="btn btn-outline">Buy</button>
-                  </td>
-
-                </tr>
-
-                <tr class="table-row">
-
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                    </button>
-                  </td>
-
-                  <th class="table-data rank" scope="row">7</th>
-
-                  <td class="table-data">
-                    <div class="wrapper">
-                      <img src="./assets/images/coin-7.svg" width="20" height="20" alt="Cardano logo" class="img">
-
-                      <h3>
-                        <a href="#" class="coin-name">Cardano <span class="span">ADA</span></a>
-                      </h3>
-                    </div>
-                  </td>
-
-                  <td class="table-data last-price">$56,623.54</td>
-
-                  <td class="table-data last-update green">+0.8%</td>
-
-                  <td class="table-data market-cap">$880,423,640,582</td>
-                  <td class="table-data">
-                    <button class="btn btn-outline">Buy</button>
-                  </td>
-
-                </tr>
-
-                <tr class="table-row">
-
-                  <td class="table-data">
-                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
-                    </button>
-                  </td>
-
-                  <th class="table-data rank" scope="row">8</th>
-
-                  <td class="table-data">
-                    <div class="wrapper">
-                      <img src="./assets/images/coin-8.svg" width="20" height="20" alt="Avalanche logo" class="img">
-
-                      <h3>
-                        <a href="#" class="coin-name">Avalanche <span class="span">AVAX</span></a>
-                      </h3>
-                    </div>
-                  </td>
-
-                  <td class="table-data last-price">$56,623.54</td>
-
-                  <td class="table-data last-update green">+1.41%</td>
-
-                  <td class="table-data market-cap">$880,423,640,582</td>
-                  <td class="table-data">
-                    <button class="btn btn-outline">Trade</button>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -684,14 +276,6 @@
       </section>
     </article>
   </main>
-
-
-
-
-
-  <!--
-    - #FOOTER
-  -->
 
   <footer class="footer">
 
@@ -708,18 +292,7 @@
 
   </footer>
 
-
-
-
-
-  <!--
-    - custom js link
-  -->
   <script src="./assets/js/script.js" defer></script>
-
-  <!--
-    - ionicon link
-  -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 

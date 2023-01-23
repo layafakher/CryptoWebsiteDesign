@@ -34,8 +34,8 @@
         }
 
         if($cost > (float)$sql_user[0]["balance"]){
-            $sql = "INSERT INTO `crypto_order`(`user_id`, `coin_id`, `order_date`, `status`, `amount`) VALUES ("
-            .$sql_user[0]['id'].",".$coin[0]['id'].",NOW(),'pending',".$_POST['amount'].")";
+            $sql = "INSERT INTO `crypto_order`(`user_id`, `coin_id`, `order_date`, `status`, `amount`, `order_price`) VALUES ("
+            .$sql_user[0]['id'].",".$coin[0]['id'].",NOW(),'pending',".$_POST['amount'].",".(float)$coin[0]['price'].")";
 
             $conn->query($sql);
 
@@ -44,8 +44,8 @@
             exit();
 
         } else {
-            $sql = "INSERT INTO `crypto_order`(`user_id`, `coin_id`, `order_date`, `status`, `amount`) VALUES ("
-            .$sql_user[0]['id'].",".$coin[0]['id'].",NOW(),'completed',".$_POST['amount'].")";
+            $sql = "INSERT INTO `crypto_order`(`user_id`, `coin_id`, `order_date`, `status`, `amount`, `order_price`) VALUES ("
+            .$sql_user[0]['id'].",".$coin[0]['id'].",NOW(),'completed',".$_POST['amount'].",".(float)$coin[0]['price'].")";
 
             $conn->query($sql);
 

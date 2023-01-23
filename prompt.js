@@ -31,3 +31,33 @@ function pr(coinName) {
         }
     })
 };
+
+function chargeAccount(){
+    Swal.fire({
+        title: 'Enter amount to charge',
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            var form = document.createElement("form");
+            var element1 = document.createElement("input"); 
+
+            form.method = "POST";
+            form.action = "charge_account.php";   
+
+            element1.value=result.value;
+            element1.name="amount";
+            form.appendChild(element1);
+
+            document.body.appendChild(form);
+
+            form.submit();
+        }
+    })
+}

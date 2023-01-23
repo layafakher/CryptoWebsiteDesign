@@ -33,7 +33,7 @@
 
         if((float)$_POST['amount'] < (float)$coin[0]["amount"]){
 
-            $sql = "UPDATE `user` SET `balance`=".((float)$sql_user[0]['balance'] - $total)." WHERE `id` =".$sql_user[0]["id"];
+            $sql = "UPDATE `user` SET `balance`=".((float)$sql_user[0]['balance'] + $total)." WHERE `id` =".$sql_user[0]["id"];
 
             $conn->query($sql);
 
@@ -49,7 +49,7 @@
 
         } else if($_POST['amount'] == (float)$coin[0]["amount"]) {
 
-            $sql = "UPDATE `user` SET `balance`=".((float)$sql_user[0]['balance'] - $total)." WHERE `id` =".$sql_user[0]["id"];
+            $sql = "UPDATE `user` SET `balance`=".((float)$sql_user[0]['balance'] + $total)." WHERE `id` =".$sql_user[0]["id"];
 
             $conn->query($sql);
 
@@ -57,7 +57,7 @@
 
             $conn->query($sql);
 
-            $user->balance = $user->balance - $cost;
+            $user->balance = $user->balance + $total;
 
             $_SESSION['user'] = serialize($user);
 

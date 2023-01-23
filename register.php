@@ -56,7 +56,7 @@
     if ($_POST["password"] == $_POST["passRepeat"]) {
       $sql = "INSERT INTO `user`(`first_name`, `last_name`, `phoneNumber`, `email`, `password`, `is_admin`) 
       VALUES ('" . $_POST["firstName"] . "','" . $_POST["lastName"] . "','" . $_POST["phoneNumber"] . "',
-              '" . $_POST["email"] . "','" . $_POST["password"] . "',1)";
+              '" . $_POST["email"] . "','" . $_POST["password"] . "',0)";
 
       $result = $conn->query($sql);
 
