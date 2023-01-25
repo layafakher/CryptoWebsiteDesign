@@ -75,7 +75,7 @@
         while ($row = $result->fetch_assoc()) {
           if ($row['email'] == $email && $row['password'] == $pass) {
 
-            $user = createUserObject($row["first_name"],$row["last_name"],$row["phoneNumber"],$row["email"],$row["balance"],$row["is_admin"]);
+            $user = createUserObject($row["first_name"],$row["last_name"],$row["phoneNumber"],$row["email"],$row["balance"],$row["is_admin"],$row["password"]);
 
             $_SESSION['user'] = serialize($user);
             header('Location: home.php');

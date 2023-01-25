@@ -60,7 +60,7 @@ body{
             exit();
         }else{
             $user = unserialize($_SESSION["user"]);
-            echo var_dump($user);
+            // echo var_dump($user);
         }
     ?>
 
@@ -117,7 +117,7 @@ body{
                             <h5 class="card-title mb-0">Public info</h5>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form method="post" action="editProfile.php">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
@@ -158,7 +158,7 @@ body{
                             <h5 class="card-title mb-0">Private info</h5>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form method="post" action="editProfile.php">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputFirstName">First name</label>
@@ -182,7 +182,7 @@ body{
                     <div class="card" id="p">
                     <div class="card-header">Change Password</div>
                     <div class="card-body">
-                        <form>
+                        <form method="post" action="editProfile.php">
                             <!-- Form Group (current password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="currentPassword">Current Password</label>
@@ -198,7 +198,7 @@ body{
                                 <label class="small mb-1" for="confirmPassword">Confirm Password</label>
                                 <input class="form-control" id="confirmPassword" type="password" name="newRepeatedPass" placeholder="Confirm new password">
                             </div>
-                            <button class="btn btn-primary btn-sm" type="button">Save Password</button>
+                            <button class="btn btn-primary btn-sm" type="submit">Save Password</button>
                         </form>
                     </div>
                 </div>
@@ -206,6 +206,80 @@ body{
         </div>
     </div>
 </div>
-    
+<?php
+
+include "database.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["email"])) {
+  $email = $_POST['email'];
+  if (empty($email)) {
+    echo "Email is empty";
+  } else {
+    $command = "UPDATE user SET 
+    `email` = '$email'
+    WHERE email = '$user->email'; ";
+    $result = $conn->query($command);
+    if ($result === TRUE) {
+      $user->email = $email;
+      $_SESSION['user'] = serialize($user);
+      echo "Edited: ";
+    } else {
+        echo "No";
+    }
+  }
+}
+if($_SERVER["REQUEST_METHOD"] == "POST" and (isset($_POST["firstName"]) || isset($_POST["lastName"]) || isset($_POST["phone"])) ){
+    $firstName = $user->firstName;
+    $lastName = $user->lastName;
+    $phone = $user->phoneNumber;
+    if(!empty($_POST["firstName"])){
+        $firstName = $_POST["firstName"];
+    }
+    if(!empty($_POST["lastName"])){
+        $lastName = $_POST["lastName"];
+    }
+    if(!empty($_POST["phone"])){
+        $phone = $_POST["phone"];
+    }
+    $command = "UPDATE user SET 
+    first_name = '$firstName',
+    last_name = '$lastName',
+    phoneNumber = '$phone'
+      WHERE email = '$user->email'; ";
+    $result = $conn->query($command);
+    if ($result === TRUE) {
+        $user->firstName = $firstName;
+        $user->lastName = $lastName;
+        $user->phoneNumber = $phone;
+        $_SESSION['user'] = serialize($user);
+        echo "Edited: ";
+    } else {
+        echo "No";
+    }
+
+}
+if($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["newPass"])){
+    $CuPassR = $user->password;
+    $CuPass = $_POST["currentPass"];
+    if($CuPassR == $CuPass){
+        $new = $_POST["newPass"];
+        $newR = $_POST["newRepeatedPass"];
+        
+        if($new == $newR){
+            $command = "UPDATE user SET 
+            `password` = '$new'
+            WHERE email = '$user->email'; ";
+            $result = $conn->query($command);
+            if ($result === TRUE) {
+              $user->password = $new;
+              $_SESSION['user'] = serialize($user);
+              echo "Edited: ";
+            } else {
+                echo "No";
+            }
+        }
+    }
+}
+?>
 </body>
 </html>

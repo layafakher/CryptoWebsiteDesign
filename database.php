@@ -16,7 +16,7 @@ function d($var)
     echo '</pre>';
 }
 
-function createUserObject($firstName,$lastName,$phoneNumber,$email,$balance,$isAdmin){
+function createUserObject($firstName,$lastName,$phoneNumber,$email,$balance,$isAdmin,$password){
     $user = new stdClass();
     $user->firstName = $firstName;
     $user->lastName = $lastName;
@@ -24,6 +24,7 @@ function createUserObject($firstName,$lastName,$phoneNumber,$email,$balance,$isA
     $user->email = $email;
     $user->balance = $balance;
     $user->isAdmin = $isAdmin;
+    $user->password = $password;
 
     return $user;
 }
