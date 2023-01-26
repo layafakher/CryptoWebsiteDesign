@@ -49,10 +49,13 @@ function appendRow(coin, i) {
         <td class="table-data">
         <div class="wrapper">
             <img src="./assets/images/${coin.name}.svg" onerror="this.src = './assets/images/ethereum.svg'" width="20" height="20" alt="Ethereum logo" class="img">
-
+            <form action="coinDetails.php" method="post">
             <h3>
-            <a href="#" class="coin-name">${coin.name}</a>
+            <input style="display:none" name="coinName" value="${coin.name}">
+            <button type = "submit" style="color:white;" class="coin-name" >${coin.name}</button>
             </h3>
+            </form>
+
         </div>
         </td>
 

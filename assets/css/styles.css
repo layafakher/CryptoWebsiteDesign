@@ -625,6 +625,9 @@ body.active { overflow: hidden; }
   min-width: max-content;
 }
 
+.coin-name{
+  color: aliceblue;
+}
 .market-table .coin-name {
   font-size: var(--fs-5);
   display: flex;
