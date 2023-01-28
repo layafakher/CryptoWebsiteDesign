@@ -71,7 +71,7 @@ if (isset($_GET['logout'])) {
       grid-template-rows: minmax(50px, 60px) 1fr;
       grid-template: "info" "chart";
       border-radius: 30px;
-      background-color: white;
+      background-color: black;
 
     }
 
@@ -93,14 +93,56 @@ if (isset($_GET['logout'])) {
       justify-content: space-between;
       align-items: center;
       padding: 0 5% 0 5%;
+      margin-top: 2.5rem;
     }
 
     .title {
       display: inline-flex;
     }
 
+    .title h1 {
+      color: white;
+    }
+
     .card h1 {
       margin-left: 10px;
+    }
+
+    .buttons {
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5rem;
+      margin-bottom: 2rem;
+    }
+
+    .buttons button {
+      color: white;
+      border: 0.5px white solid;
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 1rem;
+      border-radius: 10px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn1:hover {
+      background-color: rgb(225, 134, 24);
+      color: black;
+      border: none;
+    }
+
+    .btn2:hover {
+      background-color: rgb(46, 49, 72);
+      color: black;
+      border: none;
+    }
+
+    .btn3:hover {
+      background-color: rgb(109, 98, 178);
+      color: black;
+      border: none;
     }
 
     #btcChart,
@@ -171,8 +213,11 @@ if (isset($_GET['logout'])) {
       <section class="section hero" aria-label="hero" data-section>
         <div class="container">
 
-          <div class="hero-content">
+          <div class="hero-content" style="display: flex; align-items : center">
 
+            <figure class="hero-banner" style="margin-right: 2rem;">
+              <img src="<?php echo $path ?>" width="570" height="448" alt="hero banner" class="w-100">
+            </figure>
             <h1 class="h1 hero-title"><?php echo $coin; ?></h1>
 
             <p class="hero-text">
@@ -183,13 +228,16 @@ if (isset($_GET['logout'])) {
 
           </div>
 
-          <figure class="hero-banner">
-            <img src="<?php echo $path ?>" width="570" height="448" alt="hero banner" class="w-100">
-          </figure>
-
         </div>
       </section>
+      <div class="buttons">
+        <button class="btn1" onclick="setChartView('daily')">Daily</button>
+        <button class="btn2" onclick="setChartView('monthly')">Monthly</button>
+        <button class="btn3" onclick="setChartView('annually')">Annually</button>
+      </div>
       <container class="container">
+
+
         <cards class="cards">
           <div style="width: 100%" class="btc">
             <card class="asset-info">
@@ -367,16 +415,41 @@ if (isset($_GET['logout'])) {
   <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
   <script>
+    window.onload = () => {
+      setChartView("daily")
+    }
+
+    function setChartView(current) {
+      var daily = document.getElementsByClassName("btc")[0]
+      var monthly = document.getElementsByClassName("cosmos")[0]
+      var annually = document.getElementsByClassName("ethereum")[0]
+
+      if (current === "daily") {
+        daily.style.display = "block"
+        monthly.style.display = "none"
+        annually.style.display = "none"
+      } else if (current == "monthly") {
+        daily.style.display = "none"
+        monthly.style.display = "block"
+        annually.style.display = "none"
+      } else {
+        daily.style.display = "none"
+        monthly.style.display = "none"
+        annually.style.display = "block"
+      }
+    }
+
     const dailyData = async () => {
       var now = new Date();
-      var lastYear = new Date(now.getFullYear(), now.getMonth(), now.getDay() - 1);
-      lastYear = lastYear.getTime().toString()
-      lastYear = lastYear.substr(0, lastYear.length - 3)
       now = now.getTime().toString()
-      now = now.substr(0, now.length - 3)
+      current = now.substr(0, now.length - 3)
+      var date = new Date();
+      date.setDate(date.getDate() - 1);
+      yesterday = date.getTime().toString()
+      yesterday = yesterday.substr(0, yesterday.length - 3)
       var name = document.getElementsByClassName('hero-title')[0].innerHTML
 
-      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${name}/market_chart/range?vs_currency=usd&from=${lastYear}&to=${now}`);
+      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${name}/market_chart/range?vs_currency=usd&from=${yesterday}&to=${current}`);
       const json = await response.json();
       console.log(json);
       const data = json.prices
@@ -397,13 +470,14 @@ if (isset($_GET['logout'])) {
 
     const monthData = async () => {
       var now = new Date();
-      var lastYear = new Date(now.getFullYear(), now.getMonth() - 1, now.getDay());
-      lastYear = lastYear.getTime().toString()
-      lastYear = lastYear.substr(0, lastYear.length - 3)
       now = now.getTime().toString()
       now = now.substr(0, now.length - 3)
+      var date = new Date()
+      date.setMonth(date.getMonth() - 1);
+      lastMonth = date.getTime().toString()
+      lastMonth = lastMonth.substr(0, lastMonth.length - 3)
       var name = document.getElementsByClassName('hero-title')[0].innerHTML
-      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${name}/market_chart/range?vs_currency=usd&from=${lastYear}&to=${now}`);
+      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${name}/market_chart/range?vs_currency=usd&from=${lastMonth}&to=${now}`);
       const json = await response.json();
       console.log(json);
       const data = json.prices
@@ -430,7 +504,6 @@ if (isset($_GET['logout'])) {
       now = now.getTime().toString()
       now = now.substr(0, now.length - 3)
       var name = document.getElementsByClassName('hero-title')[0].innerHTML
-      console.log(name)
       const response = await fetch(`https://api.coingecko.com/api/v3/coins/${name}/market_chart/range?vs_currency=usd&from=${lastYear}&to=${now}`);
       const json = await response.json();
       console.log(json);
@@ -718,9 +791,6 @@ if (isset($_GET['logout'])) {
         }
       });
     }
-
-
-
 
     printDailyChart()
     printMonthlyChart()
