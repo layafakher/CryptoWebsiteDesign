@@ -1,3 +1,27 @@
+<?php include "database.php";
+
+session_start();
+
+if (!isset($_SESSION['user'])) {
+  header('Location: index.php');
+  exit();
+} else {
+  $user = unserialize($_SESSION["user"]);;
+  if (!filter_var($user->isAdmin, FILTER_VALIDATE_BOOLEAN)) {
+    header('Location: index.php');
+    exit();
+  }
+}
+
+if (isset($_POST["cancelOrder"])) {
+
+  $sql = "DELETE FROM `crypto_order` WHERE `id` = " . (int)$_POST["cancelOrder"];
+
+  $conn->query($sql);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,41 +48,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-   .table-heading , .table-data {padding: 1vw 2vw;}
+    .table-heading,
+    .table-data {
+      padding: 1vw 2vw;
+    }
   </style>
 </head>
 
-
 <body>
-
-  <?php include "database.php";
-
-    session_start();
-
-    if(!isset($_SESSION['user'])){
-      header('Location: index.php');
-      exit(); 
-    }
-    else{
-      $user = unserialize($_SESSION["user"]);;
-      if(!filter_var($user->isAdmin, FILTER_VALIDATE_BOOLEAN)){
-        header('Location: index.php');
-        exit();
-      }
-    }
-
-    if(isset($_POST["cancelOrder"])){
-
-      $sql = "DELETE FROM `crypto_order` WHERE `id` = ".(int)$_POST["cancelOrder"];
-
-      $conn->query($sql);
-    }
-
-  ?>
 
   <header class="header" data-header>
     <div class="container">
-    <div class="logo" style="cursor: pointer;" onclick="location.href = 'index.php'">
+      <div class="logo" style="cursor: pointer;" onclick="location.href = 'index.php'">
         <img src="images/logo.svg" alt="Croppo brand logo" />
         <span class="text text--medium">DALIYA CRYPTO</span>
       </div>
@@ -68,7 +69,7 @@
           <li class="navbar-item ">
             <a href="#" class="navbar-link " data-nav-link>Dashboard</a>
           </li>
-          <li class="navbar-item" >
+          <li class="navbar-item">
             <a href="#u" class="navbar-link" data-nav-link>Users</a>
           </li>
           <li class="navbar-item">
@@ -84,8 +85,8 @@
       </button>
 
       <form action="index.php">
-        <button >
-        <a  class="btn btn-outline">Exit</a>
+        <button>
+          <a class="btn btn-outline">Exit</a>
         </button>
       </form>
 
@@ -120,48 +121,48 @@
             </ul>
             <ul class="tab-content">
               <?php
-                $orders = array();
+              $orders = array();
 
-                $sql = "SELECT `user`.`first_name`, `user`.`last_name`, `coin`.`name`, `crypto_order`.`amount` , `crypto_order`.`order_price`, `crypto_order`.`order_date`, `crypto_order`.`id` FROM `crypto_order` INNER JOIN `coin` ON `crypto_order`.`coin_id` = `coin`.`id` INNER JOIN `user` ON `crypto_order`.`user_id` = `user`.`id` WHERE `status` = 'pending'";
-                $result = $conn->query($sql);
-                
-                if ($result->num_rows > 0) {
-                  while ($row = $result->fetch_assoc()) {
-                    $orders[] = $row;
-                  }
+              $sql = "SELECT `user`.`first_name`, `user`.`last_name`, `coin`.`name`, `crypto_order`.`amount` , `crypto_order`.`order_price`, `crypto_order`.`order_date`, `crypto_order`.`id` FROM `crypto_order` INNER JOIN `coin` ON `crypto_order`.`coin_id` = `coin`.`id` INNER JOIN `user` ON `crypto_order`.`user_id` = `user`.`id` WHERE `status` = 'pending'";
+              $result = $conn->query($sql);
+
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                  $orders[] = $row;
                 }
+              }
 
-                foreach ($orders as $order) {
-                  echo
-                  '
+              foreach ($orders as $order) {
+                echo
+                '
                     <li>
                       <div class="trend-card">
       
                         <div class="card-title-wrapper">
-                          <img src="./assets/images/'.$order["name"].'.svg" width="24" height="24" alt="'.$order["name"].' logo">
+                          <img src="./assets/images/' . $order["name"] . '.svg" width="24" height="24" alt="' . $order["name"] . ' logo">
       
                           <a href="#" class="card-title">
-                            '.$order["name"].' <span class="span">'.$order["name"].'/USD</span>
+                            ' . $order["name"] . ' <span class="span">' . $order["name"] . '/USD</span>
                           </a>
                         </div>
       
-                        <data class="card-value" value="46168.95">USD '.number_format((float)$order["order_price"] * (float)$order["amount"],2).'</data>
+                        <data class="card-value" value="46168.95">USD ' . number_format((float)$order["order_price"] * (float)$order["amount"], 2) . '</data>
       
-                          <data class="current-price " style="margin-bottom:1rem;">Price = '.number_format($order["order_price"],3).'</data>
-                          <data class="current-price " style="margin-bottom:1rem;">Amount = '.$order["amount"].'</data>
-                          <data class="current-price " style="margin-bottom:1rem;">User = '.$order["first_name"]." ".$order["last_name"].'</data>
-                          <data class="current-price " style="margin-bottom:1.5rem;">Order Date : '.$order["order_date"].'</data>
+                          <data class="current-price " style="margin-bottom:1rem;">Price = ' . number_format($order["order_price"], 3) . '</data>
+                          <data class="current-price " style="margin-bottom:1rem;">Amount = ' . $order["amount"] . '</data>
+                          <data class="current-price " style="margin-bottom:1rem;">User = ' . $order["first_name"] . " " . $order["last_name"] . '</data>
+                          <data class="current-price " style="margin-bottom:1.5rem;">Order Date : ' . $order["order_date"] . '</data>
                           <form method="post" action="admin.php">
-                            <input type="hidden" name="cancelOrder" value="'.$order["id"].'" />
+                            <input type="hidden" name="cancelOrder" value="' . $order["id"] . '" />
                             <button class="tab-btn active" type="submit">Cancel</button>
                           </form>
                       </div>
                     </li>
                   ';
-                }
-              
+              }
+
               ?>
-              
+
             </ul>
 
           </div>
@@ -222,20 +223,20 @@
               <tbody class="table-body">
 
                 <?php
-                  $users = array();
+                $users = array();
 
-                  $sql = "SELECT * FROM `user`";
-                  $result = $conn->query($sql);
-                  
-                  if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                      $users[] = $row;
-                    }
+                $sql = "SELECT * FROM `user`";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    $users[] = $row;
                   }
+                }
 
-                  foreach ($users as $user) {
-                    echo
-                    '
+                foreach ($users as $user) {
+                  echo
+                  '
                       <tr class="table-row">
 
                         <td class="table-data">
@@ -243,30 +244,30 @@
                           </button>
                         </td>
       
-                        <th class="table-data rank" scope="row">'.$user["id"].'</th>
+                        <th class="table-data rank" scope="row">' . $user["id"] . '</th>
       
                         <td class="table-data">
                           <div class="wrapper">
                             <h3>
-                              <a href="#" class="coin-name">'.$user["first_name"].'</a>
+                              <a href="#" class="coin-name">' . $user["first_name"] . '</a>
                             </h3>
                           </div>
                         </td>
       
-                        <td class="table-data last-price">'.$user["last_name"].'</td>
+                        <td class="table-data last-price">' . $user["last_name"] . '</td>
       
-                        <td class="table-data last-update">'.$user["phoneNumber"].'</td>
+                        <td class="table-data last-update">' . $user["phoneNumber"] . '</td>
       
-                        <td class="table-data market-cap">'.$user["email"].'</td>
+                        <td class="table-data market-cap">' . $user["email"] . '</td>
 
                         <td class="table-data">
-                          <div >'.number_format((float)$user["balance"],2).'</div>
+                          <div >' . number_format((float)$user["balance"], 2) . '</div>
                         </td>
       
                       </tr>
                     ';
-                  }
-                
+                }
+
                 ?>
 
               </tbody>

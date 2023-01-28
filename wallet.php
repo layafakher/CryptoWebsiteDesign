@@ -1,3 +1,15 @@
+<?php include "database.php";
+  session_start();
+
+  if (!isset($_SESSION['user'])) {
+    header('Location: index.php');
+    exit();
+  }
+
+  $user = unserialize($_SESSION["user"]);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,18 +28,6 @@
 </head>
 
 <body>
-
-  <?php include "database.php";
-  session_start();
-
-  if (!isset($_SESSION['user'])) {
-    header('Location: index.php');
-    exit();
-  }
-
-  $user = unserialize($_SESSION["user"]);
-
-  ?>
 
   <header class="header" data-header>
     <div class="container">

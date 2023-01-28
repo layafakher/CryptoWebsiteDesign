@@ -1,3 +1,30 @@
+<?php session_start();
+include "database.php";
+
+if (
+  isset($_POST["email"]) && isset($_POST["password"]) &&
+  isset($_POST["passRepeat"]) && isset($_POST["phoneNumber"])
+) {
+
+  $email = $_POST["email"];
+  $pass = $_POST["password"];
+
+  if ($_POST["password"] == $_POST["passRepeat"]) {
+    $sql = "INSERT INTO `user`(`first_name`, `last_name`, `phoneNumber`, `email`, `password`, `is_admin`) 
+      VALUES ('" . $_POST["firstName"] . "','" . $_POST["lastName"] . "','" . $_POST["phoneNumber"] . "',
+              '" . $_POST["email"] . "','" . $_POST["password"] . "',0)";
+
+    $result = $conn->query($sql);
+
+    $user = createUserObject($_POST["firstName"], $_POST["lastName"], $_POST["phoneNumber"], $_POST["email"], 0, false, $pass);
+
+    $_SESSION['user'] = serialize($user);
+    header('Location: home.php');
+    exit();
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,33 +68,6 @@
 </head>
 
 <body>
-
-  <?php session_start();
-  include "database.php";
-
-  if (
-    isset($_POST["email"]) && isset($_POST["password"]) &&
-    isset($_POST["passRepeat"]) && isset($_POST["phoneNumber"])
-  ) {
-
-    $email = $_POST["email"];
-    $pass = $_POST["password"];
-
-    if ($_POST["password"] == $_POST["passRepeat"]) {
-      $sql = "INSERT INTO `user`(`first_name`, `last_name`, `phoneNumber`, `email`, `password`, `is_admin`) 
-      VALUES ('" . $_POST["firstName"] . "','" . $_POST["lastName"] . "','" . $_POST["phoneNumber"] . "',
-              '" . $_POST["email"] . "','" . $_POST["password"] . "',0)";
-
-      $result = $conn->query($sql);
-
-      $user = createUserObject($_POST["firstName"],$_POST["lastName"],$_POST["phoneNumber"],$_POST["email"],0,false,$pass);
-
-      $_SESSION['user'] = serialize($user);
-      header('Location: home.php');
-      exit();
-    }
-  }
-  ?>
 
   <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">

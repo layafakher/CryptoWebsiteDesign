@@ -1,3 +1,16 @@
+<?php session_start();
+        if(!isset($_SESSION['user'])){
+            header('Location: index.php');
+            exit();
+        }
+
+        if(isset($_GET['logout'])){
+          session_unset();
+          header('Location: index.php');
+          exit();
+        }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,19 +28,6 @@
 </head>
 
 <body>
-
-    <?php session_start();
-        if(!isset($_SESSION['user'])){
-            header('Location: index.php');
-            exit();
-        }
-
-        if(isset($_GET['logout'])){
-          session_unset();
-          header('Location: index.php');
-          exit();
-        }
-    ?>
 
   <header class="header" data-header>
     <div class="container">

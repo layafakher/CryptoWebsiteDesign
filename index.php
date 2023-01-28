@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,9 +32,6 @@
       crossorigin="anonymous"></script>
   </head>
   <body>
-    <?php 
-      session_start();
-    ?>
     <!-- Header-->
     <header class="header" id="header">
       <!-- Top Header -->
